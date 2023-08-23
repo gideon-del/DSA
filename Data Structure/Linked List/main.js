@@ -118,4 +118,3 @@ class LinkedList {
 
 const myLinkedList = new LinkedList(10);
 myLinkedList.append(5).append(6).prepend(5).insert(1, 6).remove(2).remove(1);
-console.log(myLinkedList.printList());
