@@ -21,23 +21,35 @@ class LinkedList {
     this.length = 1;
   }
   append(value) {
-    let currentHead = this.head;
-    for (let i = 0; i < this.length; i++) {
-      if (currentHead.next === null) {
-        break;
-      }
-      currentHead = currentHead.next;
-    }
+    // let currentHead = this.head;
+    // for (let i = 0; i < this.length; i++) {
+    //   if (currentHead.next === null) {
+    //     break;
+    //   }
+    //   currentHead = currentHead.next;
+    // }
 
-    currentHead.next = {
-      value: value,
+    // currentHead.next = {
+    //   value: value,
+    //   next: null,
+    // };
+    // this.tail.next = {
+    //   value: value,
+    //   next: null,
+    // };
+    // this.tail = {
+    //   value: value,
+    //   next: null,
+    // };
+    // this.length++;
+    const newNode = {
+      value,
       next: null,
     };
-    this.tail = {
-      value: value,
-      next: null,
-    };
+    this.tail.next = newNode;
+    this.tail = newNode;
     this.length++;
+    return this;
   }
 }
 
