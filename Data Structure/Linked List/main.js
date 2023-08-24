@@ -16,11 +16,12 @@ class Node {
     this.next = null;
   }
 }
-class LinkedList {
+class DoublyLinkedList {
   constructor(value) {
     this.head = {
       value: value,
       next: null,
+      prev: null,
     };
     this.tail = this.head;
     this.length = 1;
@@ -48,6 +49,7 @@ class LinkedList {
     // };
     // this.length++;
     const newNode = new Node(value);
+    newNode.prev = this.tail;
     this.tail.next = newNode;
     this.tail = newNode;
     this.length++;
@@ -116,5 +118,12 @@ class LinkedList {
   }
 }
 
-const myLinkedList = new LinkedList(10);
-myLinkedList.append(5).append(6).prepend(5).insert(1, 6).remove(2).remove(1);
+// const myLinkedList = new DoublyLinkedList(10);
+// myLinkedList.append(5).append(6).prepend(5).insert(1, 6).remove(2).remove(1);
+
+// DoublyLinkedList
+const myLinkedList = new DoublyLinkedList(10);
+myLinkedList.append(5);
+myLinkedList.append(16);
+
+console.log(myLinkedList);
