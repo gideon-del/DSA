@@ -89,3 +89,49 @@ myStack.push("Udemy");
 myStack.pop();
 
 console.log(myStack);
+
+//Queue
+class Queue {
+  constructor() {
+    this.first = null;
+    this.last = null;
+    this.length = 0;
+  }
+  peek() {
+    return this.first;
+  }
+  enqueue(val) {
+    const newNode = new Node(val);
+    if (!this.length === 0) {
+      this.last = newNode;
+      this.first = newNode;
+    } else {
+      this.last.next = newNode;
+      this.last = newNode;
+    }
+    this.length++;
+    return this;
+  }
+  dequeue() {
+    if (!this.first) return null;
+    if (this.first === this.last) {
+      this.first = null;
+      this.last = null;
+    } else {
+      const nextNode = this.first.next;
+      this.first = nextNode;
+    }
+    this.length--;
+    return this;
+  }
+}
+
+const myQueue = new Queue();
+
+myQueue.enqueue("Joy");
+myQueue.enqueue("Matt");
+myQueue.enqueue("Pavel");
+myQueue.dequeue();
+myQueue.dequeue();
+myQueue.dequeue();
+console.log(myQueue);
