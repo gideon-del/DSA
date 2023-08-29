@@ -13,43 +13,102 @@ class BinarySearchTree {
   }
   insert(value) {
     const newNode = new Node(value);
-    let leaderNode = this.root;
+    let currentNode = this.root;
 
     if (!this.root) {
       this.root = newNode;
     } else {
-      while (leaderNode.left || leaderNode.right) {
-        if (leaderNode.value > value) {
-          leaderNode = leaderNode.left;
-        } else if (!leaderNode.right) {
+      while (currentNode.left || currentNode.right) {
+        if (currentNode.value > value) {
+          currentNode = currentNode.left;
+        } else if (!currentNode.right) {
           break;
         } else {
-          leaderNode = leaderNode.right;
+          currentNode = currentNode.right;
         }
       }
 
-      if (leaderNode.value > value) {
-        leaderNode.left = newNode;
+      if (currentNode.value > value) {
+        currentNode.left = newNode;
       } else {
-        leaderNode.right = newNode;
+        currentNode.right = newNode;
       }
-      console.log(leaderNode);
     }
     return this;
   }
   lookup(value) {
-    let leaderNode = this.root;
-    while (leaderNode) {
-      if (leaderNode.value === value) {
-        return leaderNode;
+    if (!this.root) {
+      return false;
+    }
+    let currentNode = this.root;
+    while (currentNode) {
+      if (currentNode.value === value) {
+        return currentNode;
       }
-      if (leaderNode.value > value) {
-        leaderNode = leaderNode.left;
+      if (currentNode.value > value) {
+        currentNode = currentNode.left;
       } else {
-        leaderNode = leaderNode.right;
+        currentNode = currentNode.right;
       }
     }
-    return leaderNode;
+    return currentNode || false;
+  }
+  remove(value) {
+    if (!this.root) {
+      return false;
+    }
+    let currentNode = this.root;
+    let parentNode = null;
+    while (currentNode) {
+      if (value > currentNode.value) {
+        parentNode = currentNode;
+        currentNode = currentNode.right;
+      } else if (currentNode.value > value) {
+        parentNode = currentNode;
+        currentNode = currentNode.left;
+      } else if (currentNode.value === value) {
+        if (!currentNode.right) {
+          if (!parentNode) {
+            this.root = currentNode.left;
+          } else {
+            if (currentNode.value > parentNode.value) {
+              parentNode.right = currentNode.left;
+            } else {
+              parentNode.left = currentNode.left;
+            }
+          }
+        } else if (!currentNode.right.left) {
+          currentNode.right.left = currentNode.left;
+          if (!parentNode) {
+            this.root = currentNode.right;
+          } else {
+            if (parentNode.value > currentNode.value) {
+              parentNode.left = currentNode.right;
+            } else {
+              parentNode.right = currentNode.right;
+            }
+          }
+        } else {
+          let leftMostChild = currentNode.right.left;
+          let leftMostParent = null;
+          while (leftMostChild.left) {
+            leftMostParent = leftMostChild;
+            leftMostChild = leftMostChild.left;
+          }
+          leftMostParent.left = leftMostChild.right;
+          leftMostChild.left = currentNode.left;
+          leftMostChild.right = currentNode.right;
+
+          if (parentNode.value > leftMostChild.value) {
+            parentNode.left = leftMostChild;
+          } else {
+            parentNode.right = leftMostChild;
+          }
+        }
+        return true;
+      }
+    }
+    return false;
   }
 }
 
@@ -62,3 +121,5 @@ tree.insert(6);
 
 tree.insert(15);
 tree.insert(170);
+tree.remove(20);
+console.log(tree.root);
